@@ -1,5 +1,11 @@
 <template>
     <div class="content">
+        <Message
+            v-if="error !== null"
+            :title="'Произошла ошибка'"
+            :text="error.message"
+            :type="messageType.Error"
+        />
         <div class="cards">
             <HouseCard
                 v-for="house in houses"
@@ -12,20 +18,28 @@
 
 <script>
 import HouseCard from '@/components/HouseCard.vue';
+import Message, { MessageType } from '@/components/Message.vue';
 import { get } from '@/modules/request.js';
 
 export default {
     name: 'HomeSelection',
     components: {
-        HouseCard
+        HouseCard,
+        Message
     },
     data() {
         return {
-            houses: []
+            houses: [],
+            error: null,
+            messageType: MessageType
         }
     },
     async mounted() {
-        this.houses = await get('/houses');
+        try {
+            this.houses = await get('/houses');
+        } catch (error) {
+            this.error = error;
+        }
     }
 };
 </script>

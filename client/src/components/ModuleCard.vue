@@ -4,19 +4,18 @@
         :selected="isCurrent"
         @select="pickModule"
     >
-        <div class="wrapper__body">
-            <h1 class="wrapper__title">{{ name }}</h1>
-            <ul class="wrapper__description-list">
-                <li class="wrapper__item" v-for="(item, index) in module.description" :key="index">
-                    <strong>{{ item.key }}:</strong> {{ item.value }}
-                </li>
-            </ul>
-        </div>
+        <h1 class="wrapper__title">{{ name }}</h1>
+        <List :items="module.description">
+            <template v-slot="{ item }">
+                <strong>{{ item.key }}:</strong> {{ item.value }}
+            </template>
+        </List>
     </Card>
 </template>
 
 <script>
 import Card from '@/components/Card.vue';
+import List from '@/components/List.vue';
 import { MODULE_NAMES } from '@/modules/constants.js';
 
 export default {
@@ -28,12 +27,12 @@ export default {
         }
     },
     components: {
-        Card
+        Card,
+        List
     },
     computed: {
         isCurrent() {
-            return false;
-            // return this.$store.state.house === this.house.id;
+            return this.$store.state.module === this.module.name;
         },
         name() {
             return MODULE_NAMES.get(this.module.name);
@@ -43,7 +42,7 @@ export default {
         pickModule() {
             this.$store.dispatch('updateModule', this.module.name);
 
-            // this.$router.push('module-selection');
+            this.$router.push('monitoring');
         }
     }
 };
@@ -51,7 +50,9 @@ export default {
 
 <style lang="scss" scoped>
 .wrapper {
+    gap: 16px;
     display: grid;
+    grid-auto-rows: max-content;
 
     &__title {
         margin: 0;
@@ -59,16 +60,6 @@ export default {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-    }
-
-    &__description-list {
-        margin: 0;
-        padding: 0;
-        list-style: none;
-    }
-
-    &__item {
-        line-height: 1.5;
     }
 }
 </style>

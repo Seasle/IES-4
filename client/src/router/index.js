@@ -20,11 +20,11 @@ const routes = [
         name: 'ModuleSelection',
         component: () => import('../views/ModuleSelection.vue')
     },
-    {
-        path: '/calculation-of-use',
-        name: 'CalculationOfUse',
-        component: () => import('../views/CalculationOfUse.vue')
-    },
+    // {
+    //     path: '/calculation-of-use',
+    //     name: 'CalculationOfUse',
+    //     component: () => import('../views/CalculationOfUse.vue')
+    // },
     {
         path: '/monitoring',
         name: 'Monitoring',

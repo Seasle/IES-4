@@ -7,23 +7,18 @@
         <img class="wrapper__image" :src="image" alt="" aria-hidden="true">
         <div class="wrapper__body">
             <h1 class="wrapper__title">{{ house.description }}</h1>
-            <ul class="wrapper__description-list">
-                <li class="wrapper__item">
-                    <strong>Площадь:</strong> {{ house.area }} <em>м<sup>2</sup></em>
-                </li>
-                <li class="wrapper__item">
-                    <strong>Количество комнат:</strong> {{ house.roomCount }}
-                </li>
-                <li class="wrapper__item">
-                    <strong>Разделенный санузел:</strong> {{ house.bathroomSeparated ? 'Да' : 'Нет' }}
-                </li>
-            </ul>
+            <List :items="items">
+                <template v-slot="{ item }">
+                    <strong>{{ item.label }}:</strong> {{ item.value }}
+                </template>
+            </List>
         </div>
     </Card>
 </template>
 
 <script>
 import Card from '@/components/Card.vue';
+import List from '@/components/List.vue';
 import { FILES_URL } from '@/modules/constants.js';
 
 export default {
@@ -35,7 +30,8 @@ export default {
         }
     },
     components: {
-        Card
+        Card,
+        List
     },
     computed: {
         isCurrent() {
@@ -43,6 +39,22 @@ export default {
         },
         image() {
             return `${FILES_URL}/img/${this.house.scheme}`;
+        },
+        items() {
+            return [
+                {
+                    label: 'Площадь',
+                    value: this.house.area
+                },
+                {
+                    label: 'Количество комнат',
+                    value: this.house.roomCount
+                },
+                {
+                    label: 'Разделенный санузел',
+                    value: this.house.bathroomSeparated ? 'Да' : 'Нет'
+                }
+            ];
         }
     },
     methods: {
@@ -61,7 +73,6 @@ export default {
     gap: 16px;
     display: grid;
     grid-template-columns: 240px 1fr;
-
 
     &__image {
         width: 240px;
@@ -84,16 +95,6 @@ export default {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-    }
-
-    &__description-list {
-        margin: 0;
-        padding: 0;
-        list-style: none;
-    }
-
-    &__item {
-        line-height: 1.5;
     }
 }
 </style>

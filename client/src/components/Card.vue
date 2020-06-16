@@ -40,11 +40,13 @@ export default {
     box-shadow: inset 0 0 0 0 transparent, var(--drop-shadow);
     transition: box-shadow 0.2s ease-in-out;
     cursor: pointer;
+    z-index: 2;
 
     &--current {
         grid-row: 1;
         grid-column: 1 / -1;
         font-size: 18px;
+        z-index: 1;
     }
 
     &:focus {

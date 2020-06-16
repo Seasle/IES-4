@@ -3,7 +3,11 @@
         <header class="header">
             <Nav class="header__nav" />
         </header>
-        <router-view />
+        <div class="page">
+            <transition name="translate">
+                <router-view />
+            </transition>
+        </div>
     </div>
 </template>
 
@@ -30,6 +34,7 @@ export default {
 body {
     margin: 0;
     font: 16px 'Roboto', sans-serif;
+    background: #f5f5f5;
     overflow: hidden;
 }
 
@@ -48,14 +53,20 @@ body {
     }
 }
 
-.content {
-    padding: 0 8px;
-    border-width: 8px 8px 8px 0;
-    border-style: solid;
-    border-color: transparent;
+.page {
+    position: relative;
     display: flex;
-    flex-direction: column;
-    background: #f5f5f5;
+    overflow: hidden;
+}
+
+.content {
+    margin: 8px 0;
+    padding: 0 16px 0 24px;
+    gap: 16px;
+    border-right: 8px solid transparent;
+    flex: 1 1 auto;
+    display: grid;
+    grid-auto-rows: max-content;
     overflow-y: auto;
 
     &::-webkit-scrollbar {
@@ -69,7 +80,52 @@ body {
     }
 }
 
+.wrapper {
+    gap: 16px;
+    display: grid;
+    grid-auto-rows: max-content;
+}
+
 strong {
     font-weight: 500;
+}
+
+.translate-enter-active,
+.translate-leave-active {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+    animation-timing-function: ease-in-out;
+}
+.translate-leave-to {
+    animation-name: slide-out;
+}
+
+.translate-enter-to {
+    animation-name: slide-in;
+}
+
+@keyframes slide-out {
+    from {
+        transform: translateX(0%);
+    }
+
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+@keyframes slide-in {
+    from {
+        transform: translateX(100%);
+    }
+
+    to {
+        transform: translateX(0%);
+    }
 }
 </style>

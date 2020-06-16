@@ -8,10 +8,10 @@
             <NavIcon src="directions.svg" />
             Выбор модуля
         </NavLink>
-        <NavLink to="calculation-of-use" v-if="isModulePicked">
+        <!-- <NavLink to="calculation-of-use" v-if="isModulePicked">
             <NavIcon src="traffic-cone.svg" />
             Рассчет использования
-        </NavLink>
+        </NavLink> -->
         <NavLink to="monitoring" v-if="isModulePicked">
             <NavIcon src="electric-tower.svg" />
             Мониторинг
