@@ -1,4 +1,4 @@
-package model
+package com.skyface.model
 
 data class Modules(
     var powerSupply: MutableList<HashMap<String, String>>? = null,

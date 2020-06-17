@@ -1,4 +1,4 @@
-package model
+package com.skyface.model
 
 data class House(
         val id: Int,
